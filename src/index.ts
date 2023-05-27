@@ -3,7 +3,7 @@ import express, {Request, Response} from 'express'
 
 // create express app
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 // create middleware
 const jsonBodyMiddleware = express.json()
@@ -86,7 +86,6 @@ app.post('/videos', (req: Request, res: Response) => {
 
     res.sendStatus(201).json(newVideo)
 });
-
 
 
 
