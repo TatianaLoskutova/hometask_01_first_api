@@ -94,6 +94,7 @@ app.post('/videos', (req: Request, res: Response) => {
     videos.push(newVideo);
 
     res.status(201).json(newVideo)
+
 });
 
 
