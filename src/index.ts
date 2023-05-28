@@ -11,13 +11,16 @@ app.use(jsonBodyMiddleware)
 
 // db
 
+export type ValidationError = {message: string, field: string}
+
+
 function addDays(date: Date, days: number) {
-    const result = new Date(date);
+    const result = new Date();
     result.setDate(result.getDate() + days);
     return result
 }
-const createdAt: any = new Date().toISOString();
-let videos: Array<any> = [{
+let createdAt = new Date()
+let videos= [{
     id : +new Date(),
     title: 'Test video',
     author: 'Tatiana',
@@ -41,13 +44,14 @@ app.get('/videos/:id', (req: Request, res: Response) => {
         return;
     }
 
-    res.sendStatus(200).json(foundVideo)
+    res.status(200).json(foundVideo)
 })
 
 app.post('/videos', (req: Request, res: Response) => {
+    const errors: ValidationError[] = []
     let title = req.body.title
     if (!title || typeof title !== 'string'|| !title.trim() || title.length > 40) {
-        res.sendStatus(400).json({
+        res.status(400).json({
             errorsMessages: [{
                     message: 'incorrect title',
                     filed: 'title'
@@ -57,7 +61,7 @@ app.post('/videos', (req: Request, res: Response) => {
     }
     let author = req.body.author
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
-        res.sendStatus(400).json({
+        res.status(400).json({
             errorsMessages: [{
                 message: 'incorrect author',
                 filed: 'author'
@@ -69,7 +73,7 @@ app.post('/videos', (req: Request, res: Response) => {
     let availableResolutions = req.body.availableResolutions
     if (!availableResolutions || typeof availableResolutions !== 'string' ||
         !availableResolutions.trim() || availableResolutions !== resolutions.find(r => r.indexOf(availableResolutions as string) > -1)) {
-        res.sendStatus(400).json({
+        res.status(400).json({
             errorsMessages: [{
                 message: 'incorrect availableResolutions',
                 filed: 'availableResolutions'
@@ -77,18 +81,20 @@ app.post('/videos', (req: Request, res: Response) => {
         })
         return;
     }
-    const newVideo = {
+    let newVideo = {
+        id : +new Date(),
         title: title,
         author: author,
-        availableResolutions: availableResolutions
+        canBeDownloaded: false,
+        minAgeRestriction: null,
+        createdAt: new Date().toISOString(),
+        publicationDate: addDays(createdAt, 1).toISOString(),
+        availableResolutions: req.body.availableResolutions
     }
     videos.push(newVideo);
 
-    res.sendStatus(201).json(newVideo)
+    res.status(201).json(newVideo)
 });
-
-
-
 
 
 
