@@ -34,7 +34,7 @@ let videos= [{
 
 
 app.get('/videos', (req: Request, res: Response) => {
-    res.sendStatus(200)
+    res.status(200).json(videos)
 })
 // app.get('/videos/:id', (req: Request, res: Response) => {
 //     const foundVideo = videos.find(v => v.id === +req.params.id);
