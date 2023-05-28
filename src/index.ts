@@ -2,7 +2,7 @@ import express, {Request, Response} from 'express'
 
 
 // create express app
-const app = express()
+export const app = express()
 const port = process.env.PORT || 5000
 
 // create middleware
@@ -95,5 +95,3 @@ app.post('/videos', (req: Request, res: Response) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-module.exports = app;
-module.exports = express()
