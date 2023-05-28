@@ -28,13 +28,13 @@ let videos= [{
     minAgeRestriction: null,
     createdAt: new Date().toISOString(),
     publicationDate: addDays(createdAt, 1).toISOString(),
-    availableResolutions: 'P144'
+    availableResolutions: ['P144']
 }]
 
 
 
 app.get('/videos', (req: Request, res: Response) => {
-    res.status(200).json(videos)
+    res.sendStatus(200)
 })
 // app.get('/videos/:id', (req: Request, res: Response) => {
 //     const foundVideo = videos.find(v => v.id === +req.params.id);
