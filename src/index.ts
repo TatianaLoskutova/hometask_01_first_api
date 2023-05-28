@@ -28,7 +28,7 @@ let videos= [{
     minAgeRestriction: null,
     createdAt: new Date().toISOString(),
     publicationDate: addDays(createdAt, 1).toISOString(),
-    availableResolutions: [ 'P144' ]
+    availableResolutions: 'P144'
 }]
 
 
