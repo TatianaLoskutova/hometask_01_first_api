@@ -28,7 +28,8 @@ interface Video {
     availableResolutions: string []
 }
 
-const videos= [{
+const video= [
+    {
     id : +new Date(),
     title: 'Test video',
     author: 'Tatiana',
@@ -37,11 +38,53 @@ const videos= [{
     createdAt: new Date().toISOString(),
     publicationDate: addDays(new Date(), 1).toISOString(),
     availableResolutions: ['P144']
-}]
+}
+]
+
 
 app.get('/videos', (req: Request, res: Response) => {
-    res.status(200).send(videos)
+    res.status(200).json(video)
 })
+
+app.post('/videos', (req: Request, res: Response) => {
+    let title = req.body.title
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        res.status(400).json({
+                errorsMessages: [{
+                    message: 'incorrect title',
+                    filed: 'title'
+                }]
+            })
+    }
+    let author = req.body.author
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+        res.status(400).send({
+            errorsMessages: [{
+                message: 'incorrect author',
+                filed: 'author'
+            }]
+        })
+    }
+    let resolutions = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
+    let availableResolutions = [req.body.availableResolutions].toString()
+    if (!availableResolutions || typeof availableResolutions !== 'string' ||
+        !availableResolutions.trim() || availableResolutions !== resolutions.find(r => r.indexOf(availableResolutions as string) > -1)) {
+        res.status(400).send({
+            errorsMessages: [{
+                message: 'incorrect availableResolutions',
+                filed: 'availableResolutions'
+            }]
+        })
+        return;
+    }
+
+    const newVideo = {...video, title, author, availableResolutions}
+    const videos = [...video, newVideo]
+
+    res.status(201).send(newVideo)
+
+});
+
 
 
 // Version 1
