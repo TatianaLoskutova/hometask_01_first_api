@@ -21,13 +21,13 @@ function addDays(date: Date, days: number) {
 }
 let createdAt = new Date()
 let videos= [{
-    id : +new Date(),
+    // id : +new Date(),
     title: 'Test video',
     author: 'Tatiana',
-    canBeDownloaded: false,
-    minAgeRestriction: null,
-    createdAt: new Date().toISOString(),
-    publicationDate: addDays(createdAt, 1).toISOString(),
+    // canBeDownloaded: false,
+    // minAgeRestriction: null,
+    // createdAt: new Date().toISOString(),
+    // publicationDate: addDays(createdAt, 1).toISOString(),
     availableResolutions: ['P144']
 }]
 
