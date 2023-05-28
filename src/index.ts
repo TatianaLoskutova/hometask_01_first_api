@@ -46,6 +46,17 @@ app.get('/videos', (req: Request, res: Response) => {
     res.status(200).json(video)
 })
 
+app.get('/videos/:id', (req: Request, res: Response) => {
+    const foundVideo = video.find(v => v.id === +req.params.id);
+
+    if (!foundVideo) {
+        res.sendStatus(404)
+        return;
+    }
+
+    res.status(200).send(foundVideo)
+})
+
 app.post('/videos', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
