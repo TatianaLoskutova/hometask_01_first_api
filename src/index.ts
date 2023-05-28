@@ -30,7 +30,7 @@ interface Video {
 
 const video= [
     {
-    id : +new Date(),
+    id : 1,
     title: 'Test video',
     author: 'Tatiana',
     canBeDownloaded: false,
@@ -47,14 +47,14 @@ app.get('/videos', (req: Request, res: Response) => {
 })
 
 app.get('/videos/:id', (req: Request, res: Response) => {
-    const foundVideo = video.find(v => v.id === +req.params.id);
+    const id = +req.params.id
+    const foundVideo = video.find(v => v.id === id);
 
-    if (!foundVideo) {
-        res.sendStatus(404)
-        return;
-    }
+    if (foundVideo) {
+        res.status(200).json(foundVideo)
+    } else {res.sendStatus(404)}
 
-    res.status(200).send(foundVideo)
+
 })
 
 app.post('/videos', (req: Request, res: Response) => {
