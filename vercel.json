@@ -2,9 +2,9 @@
   "version": 2,
   "name": "hometask_01_first_api",
   "builds": [
-    { "src": "src/index.ts", "use": "@vercel/node" }
+    { "src": "svar/task/src/index.ts", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "src/index.ts" }
+    { "src": "/(.*)", "dest": "var/task/src/index.ts" }
   ]
 }
