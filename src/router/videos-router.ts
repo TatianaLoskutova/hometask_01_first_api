@@ -1,6 +1,6 @@
 import {Request, Response, Router} from 'express';
 import {ErrorType, VideoType} from '../types/types';
-import {deleteRouters} from './delete-router';
+
 
 
 export const videoRouters = Router()
@@ -105,7 +105,8 @@ videoRouters.post('/', (req: Request, res: Response) => {
         return res.status(400).send({
             errorsMessages: errors
         })
-    }
+    } else {}
+
     const title = req.body.title
     const initDate = new Date()
     const getNextDay = new Date(+initDate + (1000 * 60 * 60 * 24))
@@ -125,7 +126,7 @@ videoRouters.post('/', (req: Request, res: Response) => {
 })
 
 videoRouters.get('/:id', (req: Request, res: Response) => {
-    const video: VideoType = videos.find(el => el.id === +req.params.id)
+    const video: VideoType | undefined = videos.find(el => el.id === +req.params.id)
     if (video) {
         res.status(200).send(video)
     } else {
@@ -164,7 +165,7 @@ videoRouters.delete('/:id', (req: Request, res: Response) => {
     return res.sendStatus(204)
 })
 
-deleteRouters.delete('/', (req: Request, res: Response) => {
+videoRouters.delete('/testing/all-data', (req: Request, res: Response) => {
     videos = []
     res.sendStatus(204)
 })
