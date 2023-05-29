@@ -28,9 +28,10 @@ interface Video {
     availableResolutions: string []
 }
 
+
 const video= [
     {
-    id : 1,
+    id : 0,
     title: 'Test video',
     author: 'Tatiana',
     canBeDownloaded: false,
@@ -46,15 +47,15 @@ app.get('/videos', (req: Request, res: Response) => {
     res.status(200).json(video)
 })
 
+// под вопросом
 app.get('/videos/:id', (req: Request, res: Response) => {
     const id = +req.params.id
-    const foundVideo = video.find(v => v.id === id);
-
+    const foundVideo = video.filter(v => v.id === id);
     if (foundVideo) {
         res.status(200).json(foundVideo)
-    } else {res.sendStatus(404)}
-
-
+    } else {
+        res.sendStatus(404)
+    }
 })
 
 app.post('/videos', (req: Request, res: Response) => {
@@ -89,8 +90,16 @@ app.post('/videos', (req: Request, res: Response) => {
         return;
     }
 
-    const newVideo = {...video, title, author, availableResolutions}
-    const videos = [...video, newVideo]
+    const newVideoInputData = {title, author}
+    const newVideo = {
+        id : +new Date(),
+        ...newVideoInputData,
+        canBeDownloaded: false,
+        minAgeRestriction: null,
+        createdAt: new Date().toISOString(),
+        publicationDate: addDays(new Date(), 1).toISOString(),
+        availableResolutions: [req.body.availableResolutions.toString()]
+    };
 
     res.status(201).send(newVideo)
 
