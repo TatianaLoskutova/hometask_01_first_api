@@ -116,7 +116,7 @@ app.delete('/videos/:id', (req:Request, res:Response) => {
     }
 })
 
-app.delete('/testing', (req:Request, res:Response) => {
+app.delete('/testing/all-data', (req:Request, res:Response) => {
     video = [];
     res.sendStatus(204)
 })
