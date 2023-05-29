@@ -60,7 +60,7 @@ const validationPostSchema = (title: string, author: string, availableResolution
 }
 
 videosRouter.get('/', (req: Request, res: Response) => {
-    res.status(200).json(videos)
+    res.status(200).send(videos)
 })
 
 videosRouter.post('/', (req: Request, res: Response) => {
