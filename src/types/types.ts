@@ -8,7 +8,7 @@ export type VideoType = {
     minAgeRestriction: number | null,
     createdAt: string,
     publicationDate: string,
-    availableResolutions: resolutions
+    availableResolutions: string[]
 }
 
 export type ErrorType = {

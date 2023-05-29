@@ -106,7 +106,7 @@ videoRouters.post('/', (req: Request, res: Response) => {
             errorsMessages: errors
         })
     }
-
+    const title = req.body.title
     const initDate = new Date()
     const getNextDay = new Date(+initDate + (1000 * 60 * 60 * 24))
     const newVideo: VideoType = {
