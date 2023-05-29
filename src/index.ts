@@ -28,7 +28,6 @@ interface Video {
     availableResolutions: string []
 }
 
-
 let video= [
     {
     id : 0,
@@ -59,7 +58,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 })
 
 
-// ++ (про ошибки спросить
+// +- (про ошибки спросить
 app.post('/videos', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
@@ -69,21 +68,23 @@ app.post('/videos', (req: Request, res: Response) => {
                     filed: 'title'
                 }]
             })
+        return;
     }
     let author = req.body.author
     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
-        res.status(400).send({
+        res.status(400).json({
             errorsMessages: [{
                 message: 'incorrect author',
                 filed: 'author'
             }]
         })
+        return;
     }
     let resolutions = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
     let availableResolutions = [req.body.availableResolutions].toString()
     if (!availableResolutions || typeof availableResolutions !== 'string' ||
         !availableResolutions.trim() || availableResolutions !== resolutions.find(r => r.indexOf(availableResolutions as string) > -1)) {
-        res.status(400).send({
+        res.status(400).json({
             errorsMessages: [{
                 message: 'incorrect availableResolutions',
                 filed: 'availableResolutions'
@@ -108,6 +109,68 @@ app.post('/videos', (req: Request, res: Response) => {
 
 });
 
+app.put('/videos/:id', (req: Request, res: Response) => {
+    let title = req.body.title;
+    if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
+        res.status(400).send({
+            errorsMessages: [{
+                message: 'incorrect title',
+                filed: 'title'
+            }]
+        })
+    }
+    let author = req.body.author
+    if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
+        res.status(400).send({
+            errorsMessages: [{
+                message: 'incorrect author',
+                filed: 'author'
+            }]
+        })
+    }
+    let resolutions = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
+    let availableResolutions = [req.body.availableResolutions].toString()
+    if (!availableResolutions || typeof availableResolutions !== 'string' ||
+        !availableResolutions.trim() || availableResolutions !== resolutions.find(r => r.indexOf(availableResolutions as string) > -1)) {
+        res.status(400).json({
+            errorsMessages: [{
+                message: 'incorrect availableResolutions',
+                filed: 'availableResolutions'
+            }]
+        })
+    }
+    let canBeDownloaded = req.body.canBeDownloaded
+    if (canBeDownloaded !== false) {
+        res.status(400).send({
+            errorsMessages: [{
+                message: 'incorrect Downloading',
+                filed: 'Downloading'
+            }]
+        })
+    }
+    let minAgeRestriction = req.body.minAgeRestriction
+    if (!minAgeRestriction || typeof minAgeRestriction !== 'number' ||minAgeRestriction > 18 || minAgeRestriction < 1) {
+        res.status(400).send({
+            errorsMessages: [{
+                message: 'incorrect minAgeRestriction',
+                filed: 'minAgeRestriction'
+            }]
+        })
+    }
+    let createdDate = new Date().toISOString();
+    let publicationDate = addDays(createdDate, 1).toISOString();
+
+    const id = +req.params.id
+    const videoToUpdate = video.find(v => v.id === id);
+
+    const newUpdatedData = {title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate}
+    if (videoToUpdate) {
+        res.status(201).json(newUpdatedData)
+    } else {
+        res.sendStatus(404)
+}
+});
+
 // ++
 app.delete('/videos/:id', (req:Request, res:Response) => {
     const id = +req.params.id
@@ -125,41 +188,8 @@ app.delete('/testing/all-data', (req:Request, res:Response) => {
     video = [];
     res.sendStatus(204)
 })
-// Version 1
 
-// app.put('/videos/:id', (req:Request, res:Response) => {
-//     let title = req.body.title;
-//     if (!title || typeof title !== 'string'|| !title.trim() || title.length > 40) {
-//         res.status(400).send({
-//             errorsMessages: [{
-//                 message: 'incorrect title',
-//                 filed: 'title'
-//             }]
-//         })
-//         return;
-//     }
-//     let author = req.body.author
-//     if (!author || typeof author !== 'string' || !author.trim() || author.length > 20) {
-//         res.status(400).send({
-//             errorsMessages: [{
-//                 message: 'incorrect author',
-//                 filed: 'author'
-//             }]
-//         })
-//         return;
-//     }
-//     let resolutions = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
-//     let availableResolutions = req.body.availableResolutions
-//     if (!availableResolutions || typeof availableResolutions !== 'string' ||
-//         !availableResolutions.trim() || availableResolutions !== resolutions.find(r => r.indexOf(availableResolutions as string) > -1)) {
-//         res.status(400).send({
-//             errorsMessages: [{
-//                 message: 'incorrect availableResolutions',
-//                 filed: 'availableResolutions'
-//             }]
-//         })
-//         return;
-//     }
+
 //     let canBeDownloaded = true;
 //     if (!canBeDownloaded) {
 //         res.status(400).send({
