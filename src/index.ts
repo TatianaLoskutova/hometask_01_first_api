@@ -47,7 +47,7 @@ app.get('/videos', (req: Request, res: Response) => {
     res.status(200).json(video)
 })
 
-// под вопросом
+// ++
 app.get('/videos/:id', (req: Request, res: Response) => {
     const id = +req.params.id
     const foundVideo = video.find(v => v.id === id);
@@ -59,11 +59,11 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 })
 
 
-// нужно ли чтобы все ошибки
+// ++ (про ошибки спросить
 app.post('/videos', (req: Request, res: Response) => {
     let title = req.body.title
     if (!title || typeof title !== 'string' || !title.trim() || title.length > 40) {
-        res.status(400).json({
+        res.status(400).send({
                 errorsMessages: [{
                     message: 'incorrect title',
                     filed: 'title'
@@ -108,6 +108,7 @@ app.post('/videos', (req: Request, res: Response) => {
 
 });
 
+// ++
 app.delete('/videos/:id', (req:Request, res:Response) => {
     const id = +req.params.id
     const savedVideo = video.filter(v => v.id !== id);
