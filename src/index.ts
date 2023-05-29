@@ -52,7 +52,8 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     const id = +req.params.id
     const foundVideo = video.filter(v => v.id === id);
     if (foundVideo) {
-        res.status(200).json(foundVideo)
+        let founded = {...foundVideo}
+        res.status(200).json(founded)
     } else {
         res.sendStatus(404)
     }
@@ -100,6 +101,7 @@ app.post('/videos', (req: Request, res: Response) => {
         publicationDate: addDays(new Date().toISOString(), 1).toISOString(),
         availableResolutions: [req.body.availableResolutions.toString()]
     };
+
     video.push(newVideo)
     res.status(201).send(newVideo)
 
