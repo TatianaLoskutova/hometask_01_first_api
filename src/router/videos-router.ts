@@ -166,6 +166,6 @@ videoRouters.delete('/:id', (req: Request, res: Response) => {
 })
 
 videoRouters.delete('/testing/all-data', (req: Request, res: Response) => {
-    videos = []
+    videos.splice(0, videos.length)
     res.sendStatus(204)
 })
