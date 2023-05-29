@@ -82,8 +82,15 @@ app.post('/videos', (req: Request, res: Response) => {
     }
     let resolutions = [ 'P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160' ];
     let availableResolutions = [req.body.availableResolutions].toString()
+    let checking = []
+    for (let i = 0; i < resolutions.length; i++) {
+        if (availableResolutions === resolutions[i]) {
+            checking.push(resolutions[i])
+        }
+    }
+
     if (!availableResolutions || typeof availableResolutions !== 'string' ||
-        !availableResolutions.trim() || availableResolutions !== resolutions.find(r => r.indexOf(availableResolutions as string) > -1)) {
+        !availableResolutions.trim()) {
         res.status(400).json({
             errorsMessages: [{
                 message: 'incorrect availableResolutions',
