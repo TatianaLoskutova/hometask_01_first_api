@@ -42,7 +42,7 @@ let video= [
 }
 ]
 
-
+//++
 app.get('/videos', (req: Request, res: Response) => {
     res.status(200).json(video)
 })
@@ -96,7 +96,7 @@ app.post('/videos', (req: Request, res: Response) => {
         ...newVideoInputData,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
+        createdAt: new Date().toString(),
         publicationDate: addDays(new Date(), 1).toISOString(),
         availableResolutions: [req.body.availableResolutions.toString()]
     };
@@ -116,6 +116,7 @@ app.delete('/videos/:id', (req:Request, res:Response) => {
     }
 })
 
+//++
 app.delete('/testing/all-data', (req:Request, res:Response) => {
     video = [];
     res.sendStatus(204)
