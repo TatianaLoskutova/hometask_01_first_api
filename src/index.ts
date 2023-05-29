@@ -52,8 +52,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
     const id = +req.params.id
     const foundVideo = video.filter(v => v.id === id);
     if (foundVideo) {
-        const found = Object.assign({}, foundVideo)
-        res.status(200).json(found)
+        res.status(200).send(foundVideo)
     } else {
         res.sendStatus(404)
     }
