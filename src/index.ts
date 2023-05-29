@@ -7,9 +7,9 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // create middleware
-const jsonBodyMiddleware = express.json()
+const parserMiddleware = express.json()
 
-app.use(jsonBodyMiddleware)
+app.use(parserMiddleware)
 
 app.use('/videos', videosRouter)
 
