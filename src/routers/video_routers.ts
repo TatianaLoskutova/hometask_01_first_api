@@ -42,7 +42,7 @@ const errorMinAgeRestrictionField = {
 }
 const errorAvailableResolutionsField = {
     message: 'Incorrect availableResolutions',
-    field: 'minAgeRestriction'
+    field: 'availableResolutions'
 }
 const errorPublicationDateField = {
     message: 'Incorrect publicationDate',
