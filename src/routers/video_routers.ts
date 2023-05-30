@@ -182,10 +182,10 @@ videoRouters.put('/:id', (req:Request, res:Response) => {
 });
 
 videoRouters.delete('/:id', (req:Request, res:Response) => {
-    for (let i = 0; i < videosDataBase.length; i++) {
+    for (let i = 0; i < videosDataBase.length ; i++) {
         if (videosDataBase[i].id === +req.params.id) {
             videosDataBase.splice(i, 1)
-            res.status(204)
+            res.sendStatus(204)
             return
         }
     }
