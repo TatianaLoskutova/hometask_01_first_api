@@ -34,7 +34,7 @@ const errorTitleField = {
 }
 const errorCanBeDownloadedField = {
     message: 'Incorrect canBeDownloadedField',
-    field: 'canBeDownloadedField'
+    field: 'canBeDownloaded'
 }
 const errorMinAgeRestrictionField = {
     message: 'Incorrect minAgeRestriction',
@@ -46,7 +46,7 @@ const errorAvailableResolutionsField = {
 }
 const errorPublicationDateField = {
     message: 'Incorrect publicationDate',
-    field: 'mpublicationDaten'
+    field: 'publicationDate'
 }
 
 const errorsArray: ErrorInnerMessageType[] = errorOuterObject.errorsMessages
