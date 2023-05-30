@@ -131,9 +131,9 @@ videoRouters.put('/:id', (req:Request, res:Response) => {
 
         const title = req.body.title
         const author = req.body.author
-        const minAgeRestriction = req.body.minAgeRestriction
         const availableResolutions = req.body.availableResolutions
         const canBeDownloaded = req.body.canBeDownloaded
+        const minAgeRestriction = req.body.minAgeRestriction
         const publicationDate = req.body.publicationDate
 
         if (!author || typeof author !== 'string' || author.length > 20 ||!author.trim()) {
@@ -144,7 +144,7 @@ videoRouters.put('/:id', (req:Request, res:Response) => {
             errorsArray.push(errorTitleField)
         }
 
-        if (canBeDownloaded && typeof canBeDownloaded === 'boolean') {
+        if (canBeDownloaded && typeof canBeDownloaded !== 'boolean') {
             errorsArray.push(errorCanBeDownloadedField)
         }
 
@@ -162,7 +162,7 @@ videoRouters.put('/:id', (req:Request, res:Response) => {
             errorsArray.push(errorAvailableResolutionsField)
         }
 
-        if (publicationDate && publicationDate !== 'string'){
+        if (publicationDate && typeof publicationDate !== 'string'){
             errorsArray.push(errorPublicationDateField)
         }
 
